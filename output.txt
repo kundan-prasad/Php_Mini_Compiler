@@ -1,0 +1,642 @@
+ICG
+T1 = red
+$color = T1
+T2 = My car is
+T3 = $color
+T4 = H
+$t = T4
+T5 = 1.550000
+$x = T5
+T6 = 1
+$x3 = T6
+T7 = 1
+$x5 = T7
+T8 = 2
+T9 = 5
+T10 = T8 + T9
+$y = T10
+T11 = 2
+T12 = 5
+T13 = T11 / T12
+$y = T13
+T14 = 2
+T15 = 5
+T16 = T14 * T15
+$y = T16
+T17 = 1
+$r = T17
+T18 = 4
+T19 = 6
+T20 = 2
+T21 = T19 * T20
+T22 = T18 * T21
+T23 = $r
+T24 = T23 * T22
+$r = T24
+T25 = 2
+T26 = 5
+T27 = T25 - T26
+$y = T27
+T28 = 2
+T29 = 5
+T30 = 7
+T31 = 5
+T32 = T30 / T31
+T33 = T29 + T32
+T34 = T28 + T33
+$y = T34
+T35 = $y
+T36 = $x5
+T37 = T35 + T36
+$eqq = T37
+T38 = 2
+$x = T38
+T39 = The number is:
+T40 = $x
+T41 = 1
+T42 = $x
+T43 = T42 + T41
+$x = T43
+T44 = The number is:
+T45 = $x
+T46 = 1
+T47 = $x
+T48 = T47 - T46
+$x = T48
+T49 = The number is:
+T50 = $x
+T51 = 2
+T52 = $x
+T53 = T52 * T51
+$x = T53
+T54 = The number is:
+T55 = $x
+T56 = 2
+T57 = $eqq
+T58 = T56 + T57
+$x = T58
+T59 = The number is:
+T60 = $x
+T61 = $t
+T62 = 20
+T63 = T61 < T62
+T64 = $x
+T65 = 6
+T66 = T64 == T65
+T67 = T63 AND T66
+IF T67 TRUE GOTO L0 ELSE GOTO L2
+L0:
+GOTO L1
+L2:
+T68 = $t
+T69 = 30
+T70 = T68 < T69
+IF T70 TRUE GOTO L3 ELSE GOTO L4
+L3:
+T71 = 0
+$x = T71
+L5:
+T72 = $x
+T73 = 10
+T74 = T72 <= T73
+IF T74 TRUE GOTO L6 ELSE GOTO L7
+L6:
+T75 = $x5
+T76 = 20
+T77 = T75 > T76
+IF T77 TRUE GOTO L8 ELSE GOTO L10
+L8:
+T78 = $x
+T79 = 30
+T80 = T78 <= T79
+IF T80 TRUE GOTO L11 ELSE GOTO L13
+L11:
+GOTO L12
+L13:
+L12:
+GOTO L9
+L10:
+L9:GOTO L5L7:
+GOTO L1
+L4:
+L14:
+T81 = $x
+T82 = 5
+T83 = T81 <= T82
+IF T83 TRUE GOTO L15 ELSE GOTO L16
+L15:
+T84 = 0
+$x = T84
+L17:
+T85 = $x
+T86 = 10
+T87 = T85 <= T86
+IF T87 TRUE GOTO L18 ELSE GOTO L19
+L18:GOTO L17L19:
+GOTO L14
+L16:
+L1:
+T88 = Have a good day Tomorrow!
+T89 = bjccbcs
+$y = T89
+T90 = kujg
+$z = T90
+T91 = 5
+$aa = T91
+T92 = $aa
+T93 = $aa
+T94 = 1
+T95 = T93 + T94
+T96 = 12
+$e = T96
+T97 = $e
+T98 =  numbers
+T99 = H
+$t = T99
+T100 = $t
+T101 = 20
+T102 = T100 < T101
+IF T102 TRUE GOTO L20 ELSE GOTO L22
+L20:
+T103 = 1
+$x5 = T103
+L23:
+T104 = $t
+T105 = 5
+T106 = T104 <= T105
+IF T106 TRUE GOTO L24 ELSE GOTO L25
+L24:
+T107 = 0
+$t = T107
+L26:
+T108 = $t
+T109 = 10
+T110 = T108 < T109
+IF T110 TRUE GOTO L27 ELSE GOTO L28
+L27:GOTO L26L28:
+GOTO L23
+L25:
+GOTO L21
+L22:
+L21:
+L29:
+T111 = $t
+T112 = 5
+T113 = T111 <= T112
+IF T113 TRUE GOTO L30 ELSE GOTO L31
+L30:
+GOTO L29
+L31:
+T114 = 12
+$e = T114
+T115 = -11
+$e = T115
+T116 = -11
+T117 = -3
+T118 = 2
+T119 = T117 * T118
+T120 = T116 * T119
+T121 = 1
+T122 = 7
+T123 = T121 - T122
+T124 = T120 + T123
+$e = T124
+
+
+
+
+OPTIMIZED ICG AFTER ELIMINATING EXTRA TEMPORARIES
+$color = red
+T2 = My car is
+T3 = $color
+$t = H
+$x = 1.550000
+$x3 = 1
+$x5 = 1
+T10 = 2 + 5
+$y = T10
+T13 = 2 / 5
+$y = T13
+T16 = 2 * 5
+$y = T16
+$r = 1
+T21 = 6 * 2
+T22 = 4 * T21
+T23 = $r
+T24 = T23 * T22
+$r = T24
+T27 = 2 - 5
+$y = T27
+T32 = 7 / 5
+T33 = 5 + T32
+T34 = 2 + T33
+$y = T34
+T35 = $y
+T36 = $x5
+T37 = T35 + T36
+$eqq = T37
+$x = 2
+T39 = The number is:
+T40 = $x
+T42 = $x
+T43 = T42 + 1
+$x = T43
+T44 = The number is:
+T45 = $x
+T47 = $x
+T48 = T47 - 1
+$x = T48
+T49 = The number is:
+T50 = $x
+T52 = $x
+T53 = T52 * 2
+$x = T53
+T54 = The number is:
+T55 = $x
+T57 = $eqq
+T58 = 2 + T57
+$x = T58
+T59 = The number is:
+T60 = $x
+T61 = $t
+T63 = T61 < 20
+T64 = $x
+T66 = T64 == 6
+T67 = T63 AND T66
+IF T67 TRUE GOTO L0 ELSE GOTO L2
+L0:
+GOTO L1
+L2:
+T68 = $t
+T70 = T68 < 30
+IF T70 TRUE GOTO L3 ELSE GOTO L4
+L3:
+$x = 0
+L5:
+T72 = $x
+T74 = T72 <= 10
+IF T74 TRUE GOTO L6 ELSE GOTO L7
+L6:
+T75 = $x5
+T77 = T75 > 20
+IF T77 TRUE GOTO L8 ELSE GOTO L10
+L8:
+T78 = $x
+T80 = T78 <= 30
+IF T80 TRUE GOTO L11 ELSE GOTO L13
+L11:
+GOTO L12
+L13:
+L12:
+GOTO L9
+L10:
+L9:GOTO L5L7:
+GOTO L1
+L4:
+L14:
+T81 = $x
+T83 = T81 <= 5
+IF T83 TRUE GOTO L15 ELSE GOTO L16
+L15:
+$x = 0
+L17:
+T85 = $x
+T87 = T85 <= 10
+IF T87 TRUE GOTO L18 ELSE GOTO L19
+L18:GOTO L17L19:
+GOTO L14
+L16:
+L1:
+T88 = Have a good day Tomorrow!
+$y = bjccbcs
+$z = kujg
+$aa = 5
+T92 = $aa
+T93 = $aa
+T95 = T93 + 1
+$e = 12
+T97 = $e
+$t = H
+T100 = $t
+T102 = T100 < 20
+IF T102 TRUE GOTO L20 ELSE GOTO L22
+L20:
+$x5 = 1
+L23:
+T104 = $t
+T106 = T104 <= 5
+IF T106 TRUE GOTO L24 ELSE GOTO L25
+L24:
+$t = 0
+L26:
+T108 = $t
+T110 = T108 < 10
+IF T110 TRUE GOTO L27 ELSE GOTO L28
+L27:GOTO L26L28:
+GOTO L23
+L25:
+GOTO L21
+L22:
+L21:
+L29:
+T111 = $t
+T113 = T111 <= 5
+IF T113 TRUE GOTO L30 ELSE GOTO L31
+L30:
+GOTO L29
+L31:
+$e = 12
+$e = -11
+T119 = -3 * 2
+T120 = -11 * T119
+T123 = 1 - 7
+T124 = T120 + T123
+$e = T124
+
+
+Eliminated 56 lines of code
+OPTIMIZED ICG AFTER CONSTANT FOLDING
+$color = red
+T2 = My car is
+T3 = $color
+$t = H
+$x = 1.550000
+$x3 = 1
+$x5 = 1
+T10 = 7
+$y = T10
+T13 = 0.4
+$y = T13
+T16 = 10
+$y = T16
+$r = 1
+T21 = 12
+T22 = 4 * T21
+T23 = $r
+T24 = T23 * T22
+$r = T24
+T27 = -3
+$y = T27
+T32 = 1.4
+T33 = 5 + T32
+T34 = 2 + T33
+$y = T34
+T35 = $y
+T36 = $x5
+T37 = T35 + T36
+$eqq = T37
+$x = 2
+T39 = The number is:
+T40 = $x
+T42 = $x
+T43 = T42 + 1
+$x = T43
+T44 = The number is:
+T45 = $x
+T47 = $x
+T48 = T47 - 1
+$x = T48
+T49 = The number is:
+T50 = $x
+T52 = $x
+T53 = T52 * 2
+$x = T53
+T54 = The number is:
+T55 = $x
+T57 = $eqq
+T58 = 2 + T57
+$x = T58
+T59 = The number is:
+T60 = $x
+T61 = $t
+T63 = T61 < 20
+T64 = $x
+T66 = T64 == 6
+T67 = T63 AND T66
+IF T67 TRUE GOTO L0 ELSE GOTO L2
+L0:
+GOTO L1
+L2:
+T68 = $t
+T70 = T68 < 30
+IF T70 TRUE GOTO L3 ELSE GOTO L4
+L3:
+$x = 0
+L5:
+T72 = $x
+T74 = T72 <= 10
+IF T74 TRUE GOTO L6 ELSE GOTO L7
+L6:
+T75 = $x5
+T77 = T75 > 20
+IF T77 TRUE GOTO L8 ELSE GOTO L10
+L8:
+T78 = $x
+T80 = T78 <= 30
+IF T80 TRUE GOTO L11 ELSE GOTO L13
+L11:
+GOTO L12
+L13:
+L12:
+GOTO L9
+L10:
+L9:GOTO L5L7:
+GOTO L1
+L4:
+L14:
+T81 = $x
+T83 = T81 <= 5
+IF T83 TRUE GOTO L15 ELSE GOTO L16
+L15:
+$x = 0
+L17:
+T85 = $x
+T87 = T85 <= 10
+IF T87 TRUE GOTO L18 ELSE GOTO L19
+L18:GOTO L17L19:
+GOTO L14
+L16:
+L1:
+T88 = Have a good day Tomorrow!
+$y = bjccbcs
+$z = kujg
+$aa = 5
+T92 = $aa
+T93 = $aa
+T95 = T93 + 1
+$e = 12
+T97 = $e
+$t = H
+T100 = $t
+T102 = T100 < 20
+IF T102 TRUE GOTO L20 ELSE GOTO L22
+L20:
+$x5 = 1
+L23:
+T104 = $t
+T106 = T104 <= 5
+IF T106 TRUE GOTO L24 ELSE GOTO L25
+L24:
+$t = 0
+L26:
+T108 = $t
+T110 = T108 < 10
+IF T110 TRUE GOTO L27 ELSE GOTO L28
+L27:GOTO L26L28:
+GOTO L23
+L25:
+GOTO L21
+L22:
+L21:
+L29:
+T111 = $t
+T113 = T111 <= 5
+IF T113 TRUE GOTO L30 ELSE GOTO L31
+L30:
+GOTO L29
+L31:
+$e = 12
+$e = -11
+T119 = -3 * 2
+T120 = -11 * T119
+T123 = -6
+T124 = T120 + T123
+$e = T124
+
+
+Eliminated 56 lines of code
+OPTIMIZED ICG AFTER REMOVING DEAD CODE
+$color = red
+$t = H
+$x = 1.550000
+$x3 = 1
+$x5 = 1
+T10 = 7
+$y = T10
+T13 = 0.4
+$y = T13
+T16 = 10
+$y = T16
+$r = 1
+T21 = 12
+T22 = 4 * T21
+T23 = $r
+T24 = T23 * T22
+$r = T24
+T27 = -3
+$y = T27
+T32 = 1.4
+T33 = 5 + T32
+T34 = 2 + T33
+$y = T34
+T35 = $y
+T36 = $x5
+T37 = T35 + T36
+$eqq = T37
+$x = 2
+T42 = $x
+T43 = T42 + 1
+$x = T43
+T47 = $x
+T48 = T47 - 1
+$x = T48
+T52 = $x
+T53 = T52 * 2
+$x = T53
+T57 = $eqq
+T58 = 2 + T57
+$x = T58
+T61 = $t
+T63 = T61 < 20
+T64 = $x
+T66 = T64 == 6
+T67 = T63 AND T66
+IF T67 TRUE GOTO L0 ELSE GOTO L2
+L0:
+GOTO L1
+L2:
+T68 = $t
+T70 = T68 < 30
+IF T70 TRUE GOTO L3 ELSE GOTO L4
+L3:
+$x = 0
+L5:
+T72 = $x
+T74 = T72 <= 10
+IF T74 TRUE GOTO L6 ELSE GOTO L7
+L6:
+T75 = $x5
+T77 = T75 > 20
+IF T77 TRUE GOTO L8 ELSE GOTO L10
+L8:
+T78 = $x
+T80 = T78 <= 30
+IF T80 TRUE GOTO L11 ELSE GOTO L13
+L11:
+GOTO L12
+L13:
+L12:
+GOTO L9
+L10:
+L9:GOTO L5L7:
+GOTO L1
+L4:
+L14:
+T81 = $x
+T83 = T81 <= 5
+IF T83 TRUE GOTO L15 ELSE GOTO L16
+L15:
+$x = 0
+L17:
+T85 = $x
+T87 = T85 <= 10
+IF T87 TRUE GOTO L18 ELSE GOTO L19
+L18:GOTO L17L19:
+GOTO L14
+L16:
+L1:
+$y = bjccbcs
+$z = kujg
+$aa = 5
+$e = 12
+$t = H
+T100 = $t
+T102 = T100 < 20
+IF T102 TRUE GOTO L20 ELSE GOTO L22
+L20:
+$x5 = 1
+L23:
+T104 = $t
+T106 = T104 <= 5
+IF T106 TRUE GOTO L24 ELSE GOTO L25
+L24:
+$t = 0
+L26:
+T108 = $t
+T110 = T108 < 10
+IF T110 TRUE GOTO L27 ELSE GOTO L28
+L27:GOTO L26L28:
+GOTO L23
+L25:
+GOTO L21
+L22:
+L21:
+L29:
+T111 = $t
+T113 = T111 <= 5
+IF T113 TRUE GOTO L30 ELSE GOTO L31
+L30:
+GOTO L29
+L31:
+$e = 12
+$e = -11
+T119 = -3 * 2
+T120 = -11 * T119
+T123 = -6
+T124 = T120 + T123
+$e = T124
+
+
+Eliminated 73 lines of code
+
+

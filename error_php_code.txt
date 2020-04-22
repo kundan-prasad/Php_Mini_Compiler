@@ -1,0 +1,91 @@
+
+$1color = "red";
+echo "My car is " . $color;
+//echo "My house is " . $COLOR . "<br>";
+//echo "My boat is " . $coLOR . "<br>";
+$t = "H";
+$x = 1.55;
+//utc
+$x3 = 1;
+/*aeg*/
+$x5 = 1;
+$y=2+5;
+$y=2/
+$y=2^
+$y=2-5
+$x5/=0;
+$y=2+5+7/5;
+$r*=4*6*2;
+$eqq = $y + $x5;
+$x=2;
+echo "The number is: ", $x;
+//while
+$x+=1;
+echo "The number is: " $x;
+$1x-=1;
+echo "The number is: ", $x
+$x*=2;
+echo "The number is: ", $x;
+$x=2+eqq;
+echo "The number is: ", $x;
+if ($t  >"20")
+{
+	if ($t  >"20")
+{
+	if ($t  >"20")
+{
+	//if
+	echo "-"
+
+if ($t  >"20")
+
+	//if
+	echo "-"
+}
+if ($t  =>"20")
+}
+	//if
+	echo "-"
+}
+/odhroia
+#khsfalnas
+/*kasgsrl.
+*?/
+if ($t  "20") 
+	//if
+	echo "-"
+
+elseif ($t < "30" nd $x == 6) {
+	//elif
+	for ($x = 0; $x <= 10 $x++) {
+		//for
+		if ($x5 > 20) 
+			//if
+			if ($x <= 30) {
+				//if
+			}
+			else {
+			}
+		
+	}
+}
+else {
+	while($x <= 5) {
+		//while
+		for ($x = 0; $x <= 10; $x++) {
+			//for
+		
+	}
+
+echo "Have a good day Tomorrow!";
+$y="bjccbcs";
+$z="kujg";
+$aa=5; 
+echo $aa;
+echo $aa+1;
+$e = 12;
+$e = 12;
+$e = -11;
+$e = -11*-3*2+1-7
+echo $e" numbers"
+$e = -12;

@@ -1,0 +1,2821 @@
+Terminals unused in grammar
+
+   T_S_COMMENT
+   T_M_COMMENT
+   T_DOLLAR
+   T_UNDERSCORE
+   T_DOUBLE_QUOTE
+   T_SINGLE_QUOTE
+   T_NOT
+   T_LETTERS
+   T_ANY_CHAR
+
+
+Grammar
+
+    0 $accept: start $end
+
+    1 $@1: %empty
+
+    2 $@2: %empty
+
+    3 start: T_OPEN_TAG $@1 CODE $@2 end
+
+    4 $@3: %empty
+
+    5 $@4: %empty
+
+    6 start: error $@3 CODE $@4 end
+
+    7 DELM: T_CONCAT
+    8     | T_COMMA
+
+    9 PE: DELM PRINT_ECHO
+
+   10 PRINT_ECHO: EXPR PE
+   11           | EXPR
+
+   12 PRINT: T_PRINT T_O_NBRAC PRINT_ECHO T_C_NBRAC T_SEMI_COLON
+
+   13 $@5: %empty
+
+   14 ECHO: T_ECHO PRINT_ECHO $@5 T_SEMI_COLON
+
+   15 BOOLEAN: T_BOOL_T
+   16        | T_BOOL_F
+
+   17 DIG: T_FLOAT
+   18    | T_INTEGER
+   19    | T_MINUS T_FLOAT
+   20    | T_MINUS T_INTEGER
+
+   21 CONST: DIG
+   22      | T_STR
+   23      | BOOLEAN
+   24      | T_NULL
+
+   25 IN_DE: T_INCREMENT
+   26      | T_DECREMENT
+
+   27 OPERDIV: T_DIVIDE
+
+   28 OPERMUL: T_MULTIPLY
+
+   29 OPER: T_PLUS
+   30     | T_MINUS
+   31     | T_OR_OP
+   32     | T_AND_OP
+
+   33 AA_OPER: T_MULTIPLY T_AND_EQUAL
+   34        | T_DIVIDE T_AND_EQUAL
+   35        | T_PLUS T_AND_EQUAL
+   36        | T_MINUS T_AND_EQUAL
+   37        | T_CONCAT T_AND_EQUAL
+   38        | T_AND_EQUAL
+
+   39 A_OPER: AA_OPER
+
+   40 CC_OPER1: T_LESSER_THAN
+   41         | T_GREATER_THAN
+   42         | T_LESSER_EQUAL
+   43         | T_GREATER_EQUAL
+   44         | T_IS_EQUAL
+   45         | T_NOT_EQUAL
+   46         | T_IDENTICAL
+   47         | T_NOT_IDENTICAL
+
+   48 CC_OPER: T_LOGICAL_AND
+   49        | T_LOGICAL_OR
+   50        | T_LOGICAL_XOR
+
+   51 C_OPER1: CC_OPER1
+
+   52 C_OPER: CC_OPER
+
+   53 ET: T_IDENTIFIER IN_DE
+   54   | IN_DE T_IDENTIFIER
+
+   55 EE: CONST
+   56   | T_IDENTIFIER
+
+   57 EXPR2: EE OPERDIV EXPR2
+   58      | EE
+
+   59 EXPR1: EXPR2 OPERMUL EXPR1
+   60      | EXPR2
+
+   61 EXPR: EXPR1 OPER EXPR
+   62     | EXPR1
+
+   63 ASIGN: T_IDENTIFIER A_OPER EXPR
+
+   64 ITER: ET
+   65     | ASIGN
+
+   66 COND1: EXPR C_OPER1 COND1
+   67      | EXPR
+
+   68 COND: COND1
+   69     | COND1 C_OPER COND
+
+   70 F_ASIGN: ASIGN
+   71        | ASIGN T_COMMA F_ASIGN
+   72        | %empty
+
+   73 F_COND: COND
+   74       | COND T_COMMA F_COND
+   75       | %empty
+
+   76 F_ITER: ITER
+   77       | ITER T_COMMA ITER
+   78       | %empty
+
+   79 F_CL: T_SEMI_COLON
+
+   80 $@6: %empty
+
+   81 $@7: %empty
+
+   82 F_CL: T_O_CBRAC $@6 CODE $@7 T_C_CBRAC
+
+   83 $@8: %empty
+
+   84 $@9: %empty
+
+   85 $@10: %empty
+
+   86 $@11: %empty
+
+   87 $@12: %empty
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+   89 $@13: %empty
+
+   90 $@14: %empty
+
+   91 $@15: %empty
+
+   92 $@16: %empty
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND $@14 T_C_NBRAC T_O_CBRAC $@15 CODE $@16 T_C_CBRAC
+
+   94 $@17: %empty
+
+   95 $@18: %empty
+
+   96 $@19: %empty
+
+   97 ELSE: T_ELSE $@17 T_O_CBRAC $@18 CODE $@19 T_C_CBRAC
+
+   98 $@20: %empty
+
+   99 $@21: %empty
+
+  100 $@22: %empty
+
+  101 $@23: %empty
+
+  102 $@24: %empty
+
+  103 $@25: %empty
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+  105 I_OP: ELSEIF
+  106     | ELSE
+  107     | %empty
+
+  108 $@26: %empty
+
+  109 $@27: %empty
+
+  110 $@28: %empty
+
+  111 $@29: %empty
+
+  112 $@30: %empty
+
+  113 $@31: %empty
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+  115 $@32: %empty
+
+  116 $@33: %empty
+
+  117 CODE: $@32 FOR $@33 CODE
+
+  118 $@34: %empty
+
+  119 $@35: %empty
+
+  120 CODE: $@34 WHILE $@35 CODE
+
+  121 $@36: %empty
+
+  122 $@37: %empty
+
+  123 CODE: $@36 IF $@37 CODE
+
+  124 $@38: %empty
+
+  125 $@39: %empty
+
+  126 CODE: $@38 ECHO $@39 CODE
+
+  127 $@40: %empty
+
+  128 $@41: %empty
+
+  129 CODE: $@40 PRINT $@41 CODE
+
+  130 $@42: %empty
+
+  131 CODE: $@42 T_NEW_LINE CODE
+
+  132 $@43: %empty
+
+  133 CODE: $@43 T_CR CODE
+
+  134 $@44: %empty
+
+  135 CODE: $@44 T_SEMI_COLON CODE
+
+  136 $@45: %empty
+
+  137 CODE: $@45 T_WHITESPACE CODE
+
+  138 $@46: %empty
+
+  139 $@47: %empty
+
+  140 CODE: $@46 ITER $@47 T_SEMI_COLON CODE
+  141     | %empty
+
+  142 end: T_CLOSE_TAG
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 6
+T_S_COMMENT (258)
+T_M_COMMENT (259)
+T_WHITESPACE (260) 137
+T_OPEN_TAG (261) 3
+T_CLOSE_TAG (262) 142
+T_DOLLAR (263)
+T_UNDERSCORE (264)
+T_SEMI_COLON (265) 12 14 79 88 135 140
+T_O_NBRAC (266) 12 88 93 104 114
+T_C_NBRAC (267) 12 88 93 104 114
+T_O_CBRAC (268) 82 93 97 104 114
+T_C_CBRAC (269) 82 93 97 104 114
+T_CONCAT (270) 7 37
+T_DOUBLE_QUOTE (271)
+T_SINGLE_QUOTE (272)
+T_COMMA (273) 8 71 74 77
+T_AND_EQUAL (274) 33 34 35 36 37 38
+T_IS_EQUAL (275) 44
+T_IDENTICAL (276) 46
+T_NOT_EQUAL (277) 45
+T_NOT_IDENTICAL (278) 47
+T_LESSER_THAN (279) 40
+T_GREATER_THAN (280) 41
+T_LESSER_EQUAL (281) 42
+T_GREATER_EQUAL (282) 43
+T_LOGICAL_AND (283) 48
+T_AND_OP (284) 32
+T_LOGICAL_OR (285) 49
+T_OR_OP (286) 31
+T_LOGICAL_XOR (287) 50
+T_NOT (288)
+T_FOR (289) 88
+T_WHILE (290) 93
+T_IF (291) 114
+T_ELSE (292) 97
+T_ELSEIF (293) 104
+T_ECHO (294) 14
+T_PRINT (295) 12
+T_INCREMENT (296) 25
+T_DECREMENT (297) 26
+T_PLUS (298) 29 35
+T_MINUS (299) 19 20 30 36
+T_DIVIDE (300) 27 34
+T_MULTIPLY (301) 28 33
+T_NULL (302) 24
+T_LETTERS (303)
+T_CR (304) 133
+T_NEW_LINE (305) 131
+T_ANY_CHAR (306)
+T_IDENTIFIER (307) 53 54 56 63
+T_STR (308) 22
+T_INTEGER (309) 18 20
+T_FLOAT (310) 17 19
+T_BOOL_T (311) 15
+T_BOOL_F (312) 16
+
+
+Nonterminals, with rules where they appear
+
+$accept (58)
+    on left: 0
+start (59)
+    on left: 3 6, on right: 0
+$@1 (60)
+    on left: 1, on right: 3
+$@2 (61)
+    on left: 2, on right: 3
+$@3 (62)
+    on left: 4, on right: 6
+$@4 (63)
+    on left: 5, on right: 6
+DELM (64)
+    on left: 7 8, on right: 9
+PE (65)
+    on left: 9, on right: 10
+PRINT_ECHO (66)
+    on left: 10 11, on right: 9 12 14
+PRINT (67)
+    on left: 12, on right: 129
+ECHO (68)
+    on left: 14, on right: 126
+$@5 (69)
+    on left: 13, on right: 14
+BOOLEAN (70)
+    on left: 15 16, on right: 23
+DIG (71)
+    on left: 17 18 19 20, on right: 21
+CONST (72)
+    on left: 21 22 23 24, on right: 55
+IN_DE (73)
+    on left: 25 26, on right: 53 54
+OPERDIV (74)
+    on left: 27, on right: 57
+OPERMUL (75)
+    on left: 28, on right: 59
+OPER (76)
+    on left: 29 30 31 32, on right: 61
+AA_OPER (77)
+    on left: 33 34 35 36 37 38, on right: 39
+A_OPER (78)
+    on left: 39, on right: 63
+CC_OPER1 (79)
+    on left: 40 41 42 43 44 45 46 47, on right: 51
+CC_OPER (80)
+    on left: 48 49 50, on right: 52
+C_OPER1 (81)
+    on left: 51, on right: 66
+C_OPER (82)
+    on left: 52, on right: 69
+ET (83)
+    on left: 53 54, on right: 64
+EE (84)
+    on left: 55 56, on right: 57 58
+EXPR2 (85)
+    on left: 57 58, on right: 57 59 60
+EXPR1 (86)
+    on left: 59 60, on right: 59 61 62
+EXPR (87)
+    on left: 61 62, on right: 10 11 61 63 66 67
+ASIGN (88)
+    on left: 63, on right: 65 70 71
+ITER (89)
+    on left: 64 65, on right: 76 77 140
+COND1 (90)
+    on left: 66 67, on right: 66 68 69
+COND (91)
+    on left: 68 69, on right: 69 73 74 93 104 114
+F_ASIGN (92)
+    on left: 70 71 72, on right: 71 88
+F_COND (93)
+    on left: 73 74 75, on right: 74 88
+F_ITER (94)
+    on left: 76 77 78, on right: 88
+F_CL (95)
+    on left: 79 82, on right: 88
+$@6 (96)
+    on left: 80, on right: 82
+$@7 (97)
+    on left: 81, on right: 82
+FOR (98)
+    on left: 88, on right: 117
+$@8 (99)
+    on left: 83, on right: 88
+$@9 (100)
+    on left: 84, on right: 88
+$@10 (101)
+    on left: 85, on right: 88
+$@11 (102)
+    on left: 86, on right: 88
+$@12 (103)
+    on left: 87, on right: 88
+WHILE (104)
+    on left: 93, on right: 120
+$@13 (105)
+    on left: 89, on right: 93
+$@14 (106)
+    on left: 90, on right: 93
+$@15 (107)
+    on left: 91, on right: 93
+$@16 (108)
+    on left: 92, on right: 93
+ELSE (109)
+    on left: 97, on right: 106
+$@17 (110)
+    on left: 94, on right: 97
+$@18 (111)
+    on left: 95, on right: 97
+$@19 (112)
+    on left: 96, on right: 97
+ELSEIF (113)
+    on left: 104, on right: 105
+$@20 (114)
+    on left: 98, on right: 104
+$@21 (115)
+    on left: 99, on right: 104
+$@22 (116)
+    on left: 100, on right: 104
+$@23 (117)
+    on left: 101, on right: 104
+$@24 (118)
+    on left: 102, on right: 104
+$@25 (119)
+    on left: 103, on right: 104
+I_OP (120)
+    on left: 105 106 107, on right: 104 114
+IF (121)
+    on left: 114, on right: 123
+$@26 (122)
+    on left: 108, on right: 114
+$@27 (123)
+    on left: 109, on right: 114
+$@28 (124)
+    on left: 110, on right: 114
+$@29 (125)
+    on left: 111, on right: 114
+$@30 (126)
+    on left: 112, on right: 114
+$@31 (127)
+    on left: 113, on right: 114
+CODE (128)
+    on left: 117 120 123 126 129 131 133 135 137 140 141, on right:
+    3 6 82 93 97 104 114 117 120 123 126 129 131 133 135 137 140
+$@32 (129)
+    on left: 115, on right: 117
+$@33 (130)
+    on left: 116, on right: 117
+$@34 (131)
+    on left: 118, on right: 120
+$@35 (132)
+    on left: 119, on right: 120
+$@36 (133)
+    on left: 121, on right: 123
+$@37 (134)
+    on left: 122, on right: 123
+$@38 (135)
+    on left: 124, on right: 126
+$@39 (136)
+    on left: 125, on right: 126
+$@40 (137)
+    on left: 127, on right: 129
+$@41 (138)
+    on left: 128, on right: 129
+$@42 (139)
+    on left: 130, on right: 131
+$@43 (140)
+    on left: 132, on right: 133
+$@44 (141)
+    on left: 134, on right: 135
+$@45 (142)
+    on left: 136, on right: 137
+$@46 (143)
+    on left: 138, on right: 140
+$@47 (144)
+    on left: 139, on right: 140
+end (145)
+    on left: 142, on right: 3 6
+
+
+State 0
+
+    0 $accept: . start $end
+
+    error       shift, and go to state 1
+    T_OPEN_TAG  shift, and go to state 2
+
+    start  go to state 3
+
+
+State 1
+
+    6 start: error . $@3 CODE $@4 end
+
+    $default  reduce using rule 4 ($@3)
+
+    $@3  go to state 4
+
+
+State 2
+
+    3 start: T_OPEN_TAG . $@1 CODE $@2 end
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 5
+
+
+State 3
+
+    0 $accept: start . $end
+
+    $end  shift, and go to state 6
+
+
+State 4
+
+    6 start: error $@3 . CODE $@4 end
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 7
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 5
+
+    3 start: T_OPEN_TAG $@1 . CODE $@2 end
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 18
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 6
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+State 7
+
+    6 start: error $@3 CODE . $@4 end
+
+    $default  reduce using rule 5 ($@4)
+
+    $@4  go to state 19
+
+
+State 8
+
+  117 CODE: $@32 . FOR $@33 CODE
+
+    T_FOR  shift, and go to state 20
+
+    FOR  go to state 21
+
+
+State 9
+
+  120 CODE: $@34 . WHILE $@35 CODE
+
+    T_WHILE  shift, and go to state 22
+
+    WHILE  go to state 23
+
+
+State 10
+
+  123 CODE: $@36 . IF $@37 CODE
+
+    T_IF  shift, and go to state 24
+
+    IF  go to state 25
+
+
+State 11
+
+  126 CODE: $@38 . ECHO $@39 CODE
+
+    T_ECHO  shift, and go to state 26
+
+    ECHO  go to state 27
+
+
+State 12
+
+  129 CODE: $@40 . PRINT $@41 CODE
+
+    T_PRINT  shift, and go to state 28
+
+    PRINT  go to state 29
+
+
+State 13
+
+  131 CODE: $@42 . T_NEW_LINE CODE
+
+    T_NEW_LINE  shift, and go to state 30
+
+
+State 14
+
+  133 CODE: $@43 . T_CR CODE
+
+    T_CR  shift, and go to state 31
+
+
+State 15
+
+  135 CODE: $@44 . T_SEMI_COLON CODE
+
+    T_SEMI_COLON  shift, and go to state 32
+
+
+State 16
+
+  137 CODE: $@45 . T_WHITESPACE CODE
+
+    T_WHITESPACE  shift, and go to state 33
+
+
+State 17
+
+  140 CODE: $@46 . ITER $@47 T_SEMI_COLON CODE
+
+    T_INCREMENT   shift, and go to state 34
+    T_DECREMENT   shift, and go to state 35
+    T_IDENTIFIER  shift, and go to state 36
+
+    IN_DE  go to state 37
+    ET     go to state 38
+    ASIGN  go to state 39
+    ITER   go to state 40
+
+
+State 18
+
+    3 start: T_OPEN_TAG $@1 CODE . $@2 end
+
+    $default  reduce using rule 2 ($@2)
+
+    $@2  go to state 41
+
+
+State 19
+
+    6 start: error $@3 CODE $@4 . end
+
+    T_CLOSE_TAG  shift, and go to state 42
+
+    end  go to state 43
+
+
+State 20
+
+   88 FOR: T_FOR . T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    T_O_NBRAC  shift, and go to state 44
+
+
+State 21
+
+  117 CODE: $@32 FOR . $@33 CODE
+
+    $default  reduce using rule 116 ($@33)
+
+    $@33  go to state 45
+
+
+State 22
+
+   93 WHILE: T_WHILE . T_O_NBRAC $@13 COND $@14 T_C_NBRAC T_O_CBRAC $@15 CODE $@16 T_C_CBRAC
+
+    T_O_NBRAC  shift, and go to state 46
+
+
+State 23
+
+  120 CODE: $@34 WHILE . $@35 CODE
+
+    $default  reduce using rule 119 ($@35)
+
+    $@35  go to state 47
+
+
+State 24
+
+  114 IF: T_IF . $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+    $default  reduce using rule 108 ($@26)
+
+    $@26  go to state 48
+
+
+State 25
+
+  123 CODE: $@36 IF . $@37 CODE
+
+    $default  reduce using rule 122 ($@37)
+
+    $@37  go to state 49
+
+
+State 26
+
+   14 ECHO: T_ECHO . PRINT_ECHO $@5 T_SEMI_COLON
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    PRINT_ECHO  go to state 58
+    BOOLEAN     go to state 59
+    DIG         go to state 60
+    CONST       go to state 61
+    EE          go to state 62
+    EXPR2       go to state 63
+    EXPR1       go to state 64
+    EXPR        go to state 65
+
+
+State 27
+
+  126 CODE: $@38 ECHO . $@39 CODE
+
+    $default  reduce using rule 125 ($@39)
+
+    $@39  go to state 66
+
+
+State 28
+
+   12 PRINT: T_PRINT . T_O_NBRAC PRINT_ECHO T_C_NBRAC T_SEMI_COLON
+
+    T_O_NBRAC  shift, and go to state 67
+
+
+State 29
+
+  129 CODE: $@40 PRINT . $@41 CODE
+
+    $default  reduce using rule 128 ($@41)
+
+    $@41  go to state 68
+
+
+State 30
+
+  131 CODE: $@42 T_NEW_LINE . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 69
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 31
+
+  133 CODE: $@43 T_CR . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 70
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 32
+
+  135 CODE: $@44 T_SEMI_COLON . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 71
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 33
+
+  137 CODE: $@45 T_WHITESPACE . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 72
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 34
+
+   25 IN_DE: T_INCREMENT .
+
+    $default  reduce using rule 25 (IN_DE)
+
+
+State 35
+
+   26 IN_DE: T_DECREMENT .
+
+    $default  reduce using rule 26 (IN_DE)
+
+
+State 36
+
+   53 ET: T_IDENTIFIER . IN_DE
+   63 ASIGN: T_IDENTIFIER . A_OPER EXPR
+
+    T_CONCAT     shift, and go to state 73
+    T_AND_EQUAL  shift, and go to state 74
+    T_INCREMENT  shift, and go to state 34
+    T_DECREMENT  shift, and go to state 35
+    T_PLUS       shift, and go to state 75
+    T_MINUS      shift, and go to state 76
+    T_DIVIDE     shift, and go to state 77
+    T_MULTIPLY   shift, and go to state 78
+
+    IN_DE    go to state 79
+    AA_OPER  go to state 80
+    A_OPER   go to state 81
+
+
+State 37
+
+   54 ET: IN_DE . T_IDENTIFIER
+
+    T_IDENTIFIER  shift, and go to state 82
+
+
+State 38
+
+   64 ITER: ET .
+
+    $default  reduce using rule 64 (ITER)
+
+
+State 39
+
+   65 ITER: ASIGN .
+
+    $default  reduce using rule 65 (ITER)
+
+
+State 40
+
+  140 CODE: $@46 ITER . $@47 T_SEMI_COLON CODE
+
+    $default  reduce using rule 139 ($@47)
+
+    $@47  go to state 83
+
+
+State 41
+
+    3 start: T_OPEN_TAG $@1 CODE $@2 . end
+
+    T_CLOSE_TAG  shift, and go to state 42
+
+    end  go to state 84
+
+
+State 42
+
+  142 end: T_CLOSE_TAG .
+
+    $default  reduce using rule 142 (end)
+
+
+State 43
+
+    6 start: error $@3 CODE $@4 end .
+
+    $default  reduce using rule 6 (start)
+
+
+State 44
+
+   88 FOR: T_FOR T_O_NBRAC . $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    $default  reduce using rule 83 ($@8)
+
+    $@8  go to state 85
+
+
+State 45
+
+  117 CODE: $@32 FOR $@33 . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 86
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 46
+
+   93 WHILE: T_WHILE T_O_NBRAC . $@13 COND $@14 T_C_NBRAC T_O_CBRAC $@15 CODE $@16 T_C_CBRAC
+
+    $default  reduce using rule 89 ($@13)
+
+    $@13  go to state 87
+
+
+State 47
+
+  120 CODE: $@34 WHILE $@35 . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 88
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 48
+
+  114 IF: T_IF $@26 . T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+    T_O_NBRAC  shift, and go to state 89
+
+
+State 49
+
+  123 CODE: $@36 IF $@37 . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 90
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 50
+
+   19 DIG: T_MINUS . T_FLOAT
+   20    | T_MINUS . T_INTEGER
+
+    T_INTEGER  shift, and go to state 91
+    T_FLOAT    shift, and go to state 92
+
+
+State 51
+
+   24 CONST: T_NULL .
+
+    $default  reduce using rule 24 (CONST)
+
+
+State 52
+
+   56 EE: T_IDENTIFIER .
+
+    $default  reduce using rule 56 (EE)
+
+
+State 53
+
+   22 CONST: T_STR .
+
+    $default  reduce using rule 22 (CONST)
+
+
+State 54
+
+   18 DIG: T_INTEGER .
+
+    $default  reduce using rule 18 (DIG)
+
+
+State 55
+
+   17 DIG: T_FLOAT .
+
+    $default  reduce using rule 17 (DIG)
+
+
+State 56
+
+   15 BOOLEAN: T_BOOL_T .
+
+    $default  reduce using rule 15 (BOOLEAN)
+
+
+State 57
+
+   16 BOOLEAN: T_BOOL_F .
+
+    $default  reduce using rule 16 (BOOLEAN)
+
+
+State 58
+
+   14 ECHO: T_ECHO PRINT_ECHO . $@5 T_SEMI_COLON
+
+    $default  reduce using rule 13 ($@5)
+
+    $@5  go to state 93
+
+
+State 59
+
+   23 CONST: BOOLEAN .
+
+    $default  reduce using rule 23 (CONST)
+
+
+State 60
+
+   21 CONST: DIG .
+
+    $default  reduce using rule 21 (CONST)
+
+
+State 61
+
+   55 EE: CONST .
+
+    $default  reduce using rule 55 (EE)
+
+
+State 62
+
+   57 EXPR2: EE . OPERDIV EXPR2
+   58      | EE .
+
+    T_DIVIDE  shift, and go to state 94
+
+    $default  reduce using rule 58 (EXPR2)
+
+    OPERDIV  go to state 95
+
+
+State 63
+
+   59 EXPR1: EXPR2 . OPERMUL EXPR1
+   60      | EXPR2 .
+
+    T_MULTIPLY  shift, and go to state 96
+
+    $default  reduce using rule 60 (EXPR1)
+
+    OPERMUL  go to state 97
+
+
+State 64
+
+   61 EXPR: EXPR1 . OPER EXPR
+   62     | EXPR1 .
+
+    T_AND_OP  shift, and go to state 98
+    T_OR_OP   shift, and go to state 99
+    T_PLUS    shift, and go to state 100
+    T_MINUS   shift, and go to state 101
+
+    $default  reduce using rule 62 (EXPR)
+
+    OPER  go to state 102
+
+
+State 65
+
+   10 PRINT_ECHO: EXPR . PE
+   11           | EXPR .
+
+    T_CONCAT  shift, and go to state 103
+    T_COMMA   shift, and go to state 104
+
+    $default  reduce using rule 11 (PRINT_ECHO)
+
+    DELM  go to state 105
+    PE    go to state 106
+
+
+State 66
+
+  126 CODE: $@38 ECHO $@39 . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 107
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 67
+
+   12 PRINT: T_PRINT T_O_NBRAC . PRINT_ECHO T_C_NBRAC T_SEMI_COLON
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    PRINT_ECHO  go to state 108
+    BOOLEAN     go to state 59
+    DIG         go to state 60
+    CONST       go to state 61
+    EE          go to state 62
+    EXPR2       go to state 63
+    EXPR1       go to state 64
+    EXPR        go to state 65
+
+
+State 68
+
+  129 CODE: $@40 PRINT $@41 . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 109
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 69
+
+  131 CODE: $@42 T_NEW_LINE CODE .
+
+    $default  reduce using rule 131 (CODE)
+
+
+State 70
+
+  133 CODE: $@43 T_CR CODE .
+
+    $default  reduce using rule 133 (CODE)
+
+
+State 71
+
+  135 CODE: $@44 T_SEMI_COLON CODE .
+
+    $default  reduce using rule 135 (CODE)
+
+
+State 72
+
+  137 CODE: $@45 T_WHITESPACE CODE .
+
+    $default  reduce using rule 137 (CODE)
+
+
+State 73
+
+   37 AA_OPER: T_CONCAT . T_AND_EQUAL
+
+    T_AND_EQUAL  shift, and go to state 110
+
+
+State 74
+
+   38 AA_OPER: T_AND_EQUAL .
+
+    $default  reduce using rule 38 (AA_OPER)
+
+
+State 75
+
+   35 AA_OPER: T_PLUS . T_AND_EQUAL
+
+    T_AND_EQUAL  shift, and go to state 111
+
+
+State 76
+
+   36 AA_OPER: T_MINUS . T_AND_EQUAL
+
+    T_AND_EQUAL  shift, and go to state 112
+
+
+State 77
+
+   34 AA_OPER: T_DIVIDE . T_AND_EQUAL
+
+    T_AND_EQUAL  shift, and go to state 113
+
+
+State 78
+
+   33 AA_OPER: T_MULTIPLY . T_AND_EQUAL
+
+    T_AND_EQUAL  shift, and go to state 114
+
+
+State 79
+
+   53 ET: T_IDENTIFIER IN_DE .
+
+    $default  reduce using rule 53 (ET)
+
+
+State 80
+
+   39 A_OPER: AA_OPER .
+
+    $default  reduce using rule 39 (A_OPER)
+
+
+State 81
+
+   63 ASIGN: T_IDENTIFIER A_OPER . EXPR
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 115
+
+
+State 82
+
+   54 ET: IN_DE T_IDENTIFIER .
+
+    $default  reduce using rule 54 (ET)
+
+
+State 83
+
+  140 CODE: $@46 ITER $@47 . T_SEMI_COLON CODE
+
+    T_SEMI_COLON  shift, and go to state 116
+
+
+State 84
+
+    3 start: T_OPEN_TAG $@1 CODE $@2 end .
+
+    $default  reduce using rule 3 (start)
+
+
+State 85
+
+   88 FOR: T_FOR T_O_NBRAC $@8 . F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    T_IDENTIFIER  shift, and go to state 117
+
+    $default  reduce using rule 72 (F_ASIGN)
+
+    ASIGN    go to state 118
+    F_ASIGN  go to state 119
+
+
+State 86
+
+  117 CODE: $@32 FOR $@33 CODE .
+
+    $default  reduce using rule 117 (CODE)
+
+
+State 87
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 . COND $@14 T_C_NBRAC T_O_CBRAC $@15 CODE $@16 T_C_CBRAC
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 120
+    COND1    go to state 121
+    COND     go to state 122
+
+
+State 88
+
+  120 CODE: $@34 WHILE $@35 CODE .
+
+    $default  reduce using rule 120 (CODE)
+
+
+State 89
+
+  114 IF: T_IF $@26 T_O_NBRAC . $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+    $default  reduce using rule 109 ($@27)
+
+    $@27  go to state 123
+
+
+State 90
+
+  123 CODE: $@36 IF $@37 CODE .
+
+    $default  reduce using rule 123 (CODE)
+
+
+State 91
+
+   20 DIG: T_MINUS T_INTEGER .
+
+    $default  reduce using rule 20 (DIG)
+
+
+State 92
+
+   19 DIG: T_MINUS T_FLOAT .
+
+    $default  reduce using rule 19 (DIG)
+
+
+State 93
+
+   14 ECHO: T_ECHO PRINT_ECHO $@5 . T_SEMI_COLON
+
+    T_SEMI_COLON  shift, and go to state 124
+
+
+State 94
+
+   27 OPERDIV: T_DIVIDE .
+
+    $default  reduce using rule 27 (OPERDIV)
+
+
+State 95
+
+   57 EXPR2: EE OPERDIV . EXPR2
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 125
+
+
+State 96
+
+   28 OPERMUL: T_MULTIPLY .
+
+    $default  reduce using rule 28 (OPERMUL)
+
+
+State 97
+
+   59 EXPR1: EXPR2 OPERMUL . EXPR1
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 126
+
+
+State 98
+
+   32 OPER: T_AND_OP .
+
+    $default  reduce using rule 32 (OPER)
+
+
+State 99
+
+   31 OPER: T_OR_OP .
+
+    $default  reduce using rule 31 (OPER)
+
+
+State 100
+
+   29 OPER: T_PLUS .
+
+    $default  reduce using rule 29 (OPER)
+
+
+State 101
+
+   30 OPER: T_MINUS .
+
+    $default  reduce using rule 30 (OPER)
+
+
+State 102
+
+   61 EXPR: EXPR1 OPER . EXPR
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 127
+
+
+State 103
+
+    7 DELM: T_CONCAT .
+
+    $default  reduce using rule 7 (DELM)
+
+
+State 104
+
+    8 DELM: T_COMMA .
+
+    $default  reduce using rule 8 (DELM)
+
+
+State 105
+
+    9 PE: DELM . PRINT_ECHO
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    PRINT_ECHO  go to state 128
+    BOOLEAN     go to state 59
+    DIG         go to state 60
+    CONST       go to state 61
+    EE          go to state 62
+    EXPR2       go to state 63
+    EXPR1       go to state 64
+    EXPR        go to state 65
+
+
+State 106
+
+   10 PRINT_ECHO: EXPR PE .
+
+    $default  reduce using rule 10 (PRINT_ECHO)
+
+
+State 107
+
+  126 CODE: $@38 ECHO $@39 CODE .
+
+    $default  reduce using rule 126 (CODE)
+
+
+State 108
+
+   12 PRINT: T_PRINT T_O_NBRAC PRINT_ECHO . T_C_NBRAC T_SEMI_COLON
+
+    T_C_NBRAC  shift, and go to state 129
+
+
+State 109
+
+  129 CODE: $@40 PRINT $@41 CODE .
+
+    $default  reduce using rule 129 (CODE)
+
+
+State 110
+
+   37 AA_OPER: T_CONCAT T_AND_EQUAL .
+
+    $default  reduce using rule 37 (AA_OPER)
+
+
+State 111
+
+   35 AA_OPER: T_PLUS T_AND_EQUAL .
+
+    $default  reduce using rule 35 (AA_OPER)
+
+
+State 112
+
+   36 AA_OPER: T_MINUS T_AND_EQUAL .
+
+    $default  reduce using rule 36 (AA_OPER)
+
+
+State 113
+
+   34 AA_OPER: T_DIVIDE T_AND_EQUAL .
+
+    $default  reduce using rule 34 (AA_OPER)
+
+
+State 114
+
+   33 AA_OPER: T_MULTIPLY T_AND_EQUAL .
+
+    $default  reduce using rule 33 (AA_OPER)
+
+
+State 115
+
+   63 ASIGN: T_IDENTIFIER A_OPER EXPR .
+
+    $default  reduce using rule 63 (ASIGN)
+
+
+State 116
+
+  140 CODE: $@46 ITER $@47 T_SEMI_COLON . CODE
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_CLOSE_TAG   reduce using rule 141 (CODE)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 130
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 117
+
+   63 ASIGN: T_IDENTIFIER . A_OPER EXPR
+
+    T_CONCAT     shift, and go to state 73
+    T_AND_EQUAL  shift, and go to state 74
+    T_PLUS       shift, and go to state 75
+    T_MINUS      shift, and go to state 76
+    T_DIVIDE     shift, and go to state 77
+    T_MULTIPLY   shift, and go to state 78
+
+    AA_OPER  go to state 80
+    A_OPER   go to state 81
+
+
+State 118
+
+   70 F_ASIGN: ASIGN .
+   71        | ASIGN . T_COMMA F_ASIGN
+
+    T_COMMA  shift, and go to state 131
+
+    $default  reduce using rule 70 (F_ASIGN)
+
+
+State 119
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN . T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    T_SEMI_COLON  shift, and go to state 132
+
+
+State 120
+
+   66 COND1: EXPR . C_OPER1 COND1
+   67      | EXPR .
+
+    T_IS_EQUAL       shift, and go to state 133
+    T_IDENTICAL      shift, and go to state 134
+    T_NOT_EQUAL      shift, and go to state 135
+    T_NOT_IDENTICAL  shift, and go to state 136
+    T_LESSER_THAN    shift, and go to state 137
+    T_GREATER_THAN   shift, and go to state 138
+    T_LESSER_EQUAL   shift, and go to state 139
+    T_GREATER_EQUAL  shift, and go to state 140
+
+    $default  reduce using rule 67 (COND1)
+
+    CC_OPER1  go to state 141
+    C_OPER1   go to state 142
+
+
+State 121
+
+   68 COND: COND1 .
+   69     | COND1 . C_OPER COND
+
+    T_LOGICAL_AND  shift, and go to state 143
+    T_LOGICAL_OR   shift, and go to state 144
+    T_LOGICAL_XOR  shift, and go to state 145
+
+    $default  reduce using rule 68 (COND)
+
+    CC_OPER  go to state 146
+    C_OPER   go to state 147
+
+
+State 122
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND . $@14 T_C_NBRAC T_O_CBRAC $@15 CODE $@16 T_C_CBRAC
+
+    $default  reduce using rule 90 ($@14)
+
+    $@14  go to state 148
+
+
+State 123
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 . COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 120
+    COND1    go to state 121
+    COND     go to state 149
+
+
+State 124
+
+   14 ECHO: T_ECHO PRINT_ECHO $@5 T_SEMI_COLON .
+
+    $default  reduce using rule 14 (ECHO)
+
+
+State 125
+
+   57 EXPR2: EE OPERDIV EXPR2 .
+
+    $default  reduce using rule 57 (EXPR2)
+
+
+State 126
+
+   59 EXPR1: EXPR2 OPERMUL EXPR1 .
+
+    $default  reduce using rule 59 (EXPR1)
+
+
+State 127
+
+   61 EXPR: EXPR1 OPER EXPR .
+
+    $default  reduce using rule 61 (EXPR)
+
+
+State 128
+
+    9 PE: DELM PRINT_ECHO .
+
+    $default  reduce using rule 9 (PE)
+
+
+State 129
+
+   12 PRINT: T_PRINT T_O_NBRAC PRINT_ECHO T_C_NBRAC . T_SEMI_COLON
+
+    T_SEMI_COLON  shift, and go to state 150
+
+
+State 130
+
+  140 CODE: $@46 ITER $@47 T_SEMI_COLON CODE .
+
+    $default  reduce using rule 140 (CODE)
+
+
+State 131
+
+   71 F_ASIGN: ASIGN T_COMMA . F_ASIGN
+
+    T_IDENTIFIER  shift, and go to state 117
+
+    $default  reduce using rule 72 (F_ASIGN)
+
+    ASIGN    go to state 118
+    F_ASIGN  go to state 151
+
+
+State 132
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON . $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    $default  reduce using rule 84 ($@9)
+
+    $@9  go to state 152
+
+
+State 133
+
+   44 CC_OPER1: T_IS_EQUAL .
+
+    $default  reduce using rule 44 (CC_OPER1)
+
+
+State 134
+
+   46 CC_OPER1: T_IDENTICAL .
+
+    $default  reduce using rule 46 (CC_OPER1)
+
+
+State 135
+
+   45 CC_OPER1: T_NOT_EQUAL .
+
+    $default  reduce using rule 45 (CC_OPER1)
+
+
+State 136
+
+   47 CC_OPER1: T_NOT_IDENTICAL .
+
+    $default  reduce using rule 47 (CC_OPER1)
+
+
+State 137
+
+   40 CC_OPER1: T_LESSER_THAN .
+
+    $default  reduce using rule 40 (CC_OPER1)
+
+
+State 138
+
+   41 CC_OPER1: T_GREATER_THAN .
+
+    $default  reduce using rule 41 (CC_OPER1)
+
+
+State 139
+
+   42 CC_OPER1: T_LESSER_EQUAL .
+
+    $default  reduce using rule 42 (CC_OPER1)
+
+
+State 140
+
+   43 CC_OPER1: T_GREATER_EQUAL .
+
+    $default  reduce using rule 43 (CC_OPER1)
+
+
+State 141
+
+   51 C_OPER1: CC_OPER1 .
+
+    $default  reduce using rule 51 (C_OPER1)
+
+
+State 142
+
+   66 COND1: EXPR C_OPER1 . COND1
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 120
+    COND1    go to state 153
+
+
+State 143
+
+   48 CC_OPER: T_LOGICAL_AND .
+
+    $default  reduce using rule 48 (CC_OPER)
+
+
+State 144
+
+   49 CC_OPER: T_LOGICAL_OR .
+
+    $default  reduce using rule 49 (CC_OPER)
+
+
+State 145
+
+   50 CC_OPER: T_LOGICAL_XOR .
+
+    $default  reduce using rule 50 (CC_OPER)
+
+
+State 146
+
+   52 C_OPER: CC_OPER .
+
+    $default  reduce using rule 52 (C_OPER)
+
+
+State 147
+
+   69 COND: COND1 C_OPER . COND
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 120
+    COND1    go to state 121
+    COND     go to state 154
+
+
+State 148
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND $@14 . T_C_NBRAC T_O_CBRAC $@15 CODE $@16 T_C_CBRAC
+
+    T_C_NBRAC  shift, and go to state 155
+
+
+State 149
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND . $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+    $default  reduce using rule 110 ($@28)
+
+    $@28  go to state 156
+
+
+State 150
+
+   12 PRINT: T_PRINT T_O_NBRAC PRINT_ECHO T_C_NBRAC T_SEMI_COLON .
+
+    $default  reduce using rule 12 (PRINT)
+
+
+State 151
+
+   71 F_ASIGN: ASIGN T_COMMA F_ASIGN .
+
+    $default  reduce using rule 71 (F_ASIGN)
+
+
+State 152
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 . F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    $default  reduce using rule 75 (F_COND)
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 120
+    COND1    go to state 121
+    COND     go to state 157
+    F_COND   go to state 158
+
+
+State 153
+
+   66 COND1: EXPR C_OPER1 COND1 .
+
+    $default  reduce using rule 66 (COND1)
+
+
+State 154
+
+   69 COND: COND1 C_OPER COND .
+
+    $default  reduce using rule 69 (COND)
+
+
+State 155
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND $@14 T_C_NBRAC . T_O_CBRAC $@15 CODE $@16 T_C_CBRAC
+
+    T_O_CBRAC  shift, and go to state 159
+
+
+State 156
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 . T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+    T_C_NBRAC  shift, and go to state 160
+
+
+State 157
+
+   73 F_COND: COND .
+   74       | COND . T_COMMA F_COND
+
+    T_COMMA  shift, and go to state 161
+
+    $default  reduce using rule 73 (F_COND)
+
+
+State 158
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND . $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    $default  reduce using rule 85 ($@10)
+
+    $@10  go to state 162
+
+
+State 159
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND $@14 T_C_NBRAC T_O_CBRAC . $@15 CODE $@16 T_C_CBRAC
+
+    $default  reduce using rule 91 ($@15)
+
+    $@15  go to state 163
+
+
+State 160
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC . T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+    T_O_CBRAC  shift, and go to state 164
+
+
+State 161
+
+   74 F_COND: COND T_COMMA . F_COND
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    $default  reduce using rule 75 (F_COND)
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 120
+    COND1    go to state 121
+    COND     go to state 157
+    F_COND   go to state 165
+
+
+State 162
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 . T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    T_SEMI_COLON  shift, and go to state 166
+
+
+State 163
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND $@14 T_C_NBRAC T_O_CBRAC $@15 . CODE $@16 T_C_CBRAC
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 167
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 164
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC . $@29 CODE $@30 T_C_CBRAC $@31 I_OP
+
+    $default  reduce using rule 111 ($@29)
+
+    $@29  go to state 168
+
+
+State 165
+
+   74 F_COND: COND T_COMMA F_COND .
+
+    $default  reduce using rule 74 (F_COND)
+
+
+State 166
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON . $@11 F_ITER $@12 T_C_NBRAC F_CL
+
+    $default  reduce using rule 86 ($@11)
+
+    $@11  go to state 169
+
+
+State 167
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND $@14 T_C_NBRAC T_O_CBRAC $@15 CODE . $@16 T_C_CBRAC
+
+    $default  reduce using rule 92 ($@16)
+
+    $@16  go to state 170
+
+
+State 168
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 . CODE $@30 T_C_CBRAC $@31 I_OP
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 171
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 169
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 . F_ITER $@12 T_C_NBRAC F_CL
+
+    T_INCREMENT   shift, and go to state 34
+    T_DECREMENT   shift, and go to state 35
+    T_IDENTIFIER  shift, and go to state 36
+
+    $default  reduce using rule 78 (F_ITER)
+
+    IN_DE   go to state 37
+    ET      go to state 38
+    ASIGN   go to state 39
+    ITER    go to state 172
+    F_ITER  go to state 173
+
+
+State 170
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND $@14 T_C_NBRAC T_O_CBRAC $@15 CODE $@16 . T_C_CBRAC
+
+    T_C_CBRAC  shift, and go to state 174
+
+
+State 171
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE . $@30 T_C_CBRAC $@31 I_OP
+
+    $default  reduce using rule 112 ($@30)
+
+    $@30  go to state 175
+
+
+State 172
+
+   76 F_ITER: ITER .
+   77       | ITER . T_COMMA ITER
+
+    T_COMMA  shift, and go to state 176
+
+    $default  reduce using rule 76 (F_ITER)
+
+
+State 173
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER . $@12 T_C_NBRAC F_CL
+
+    $default  reduce using rule 87 ($@12)
+
+    $@12  go to state 177
+
+
+State 174
+
+   93 WHILE: T_WHILE T_O_NBRAC $@13 COND $@14 T_C_NBRAC T_O_CBRAC $@15 CODE $@16 T_C_CBRAC .
+
+    $default  reduce using rule 93 (WHILE)
+
+
+State 175
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 . T_C_CBRAC $@31 I_OP
+
+    T_C_CBRAC  shift, and go to state 178
+
+
+State 176
+
+   77 F_ITER: ITER T_COMMA . ITER
+
+    T_INCREMENT   shift, and go to state 34
+    T_DECREMENT   shift, and go to state 35
+    T_IDENTIFIER  shift, and go to state 36
+
+    IN_DE  go to state 37
+    ET     go to state 38
+    ASIGN  go to state 39
+    ITER   go to state 179
+
+
+State 177
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 . T_C_NBRAC F_CL
+
+    T_C_NBRAC  shift, and go to state 180
+
+
+State 178
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC . $@31 I_OP
+
+    $default  reduce using rule 113 ($@31)
+
+    $@31  go to state 181
+
+
+State 179
+
+   77 F_ITER: ITER T_COMMA ITER .
+
+    $default  reduce using rule 77 (F_ITER)
+
+
+State 180
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC . F_CL
+
+    T_SEMI_COLON  shift, and go to state 182
+    T_O_CBRAC     shift, and go to state 183
+
+    F_CL  go to state 184
+
+
+State 181
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 . I_OP
+
+    T_ELSE    shift, and go to state 185
+    T_ELSEIF  shift, and go to state 186
+
+    $default  reduce using rule 107 (I_OP)
+
+    ELSE    go to state 187
+    ELSEIF  go to state 188
+    I_OP    go to state 189
+
+
+State 182
+
+   79 F_CL: T_SEMI_COLON .
+
+    $default  reduce using rule 79 (F_CL)
+
+
+State 183
+
+   82 F_CL: T_O_CBRAC . $@6 CODE $@7 T_C_CBRAC
+
+    $default  reduce using rule 80 ($@6)
+
+    $@6  go to state 190
+
+
+State 184
+
+   88 FOR: T_FOR T_O_NBRAC $@8 F_ASIGN T_SEMI_COLON $@9 F_COND $@10 T_SEMI_COLON $@11 F_ITER $@12 T_C_NBRAC F_CL .
+
+    $default  reduce using rule 88 (FOR)
+
+
+State 185
+
+   97 ELSE: T_ELSE . $@17 T_O_CBRAC $@18 CODE $@19 T_C_CBRAC
+
+    $default  reduce using rule 94 ($@17)
+
+    $@17  go to state 191
+
+
+State 186
+
+  104 ELSEIF: T_ELSEIF . $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+    $default  reduce using rule 98 ($@20)
+
+    $@20  go to state 192
+
+
+State 187
+
+  106 I_OP: ELSE .
+
+    $default  reduce using rule 106 (I_OP)
+
+
+State 188
+
+  105 I_OP: ELSEIF .
+
+    $default  reduce using rule 105 (I_OP)
+
+
+State 189
+
+  114 IF: T_IF $@26 T_O_NBRAC $@27 COND $@28 T_C_NBRAC T_O_CBRAC $@29 CODE $@30 T_C_CBRAC $@31 I_OP .
+
+    $default  reduce using rule 114 (IF)
+
+
+State 190
+
+   82 F_CL: T_O_CBRAC $@6 . CODE $@7 T_C_CBRAC
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 193
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 191
+
+   97 ELSE: T_ELSE $@17 . T_O_CBRAC $@18 CODE $@19 T_C_CBRAC
+
+    T_O_CBRAC  shift, and go to state 194
+
+
+State 192
+
+  104 ELSEIF: T_ELSEIF $@20 . T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+    T_O_NBRAC  shift, and go to state 195
+
+
+State 193
+
+   82 F_CL: T_O_CBRAC $@6 CODE . $@7 T_C_CBRAC
+
+    $default  reduce using rule 81 ($@7)
+
+    $@7  go to state 196
+
+
+State 194
+
+   97 ELSE: T_ELSE $@17 T_O_CBRAC . $@18 CODE $@19 T_C_CBRAC
+
+    $default  reduce using rule 95 ($@18)
+
+    $@18  go to state 197
+
+
+State 195
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC . $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+    $default  reduce using rule 99 ($@21)
+
+    $@21  go to state 198
+
+
+State 196
+
+   82 F_CL: T_O_CBRAC $@6 CODE $@7 . T_C_CBRAC
+
+    T_C_CBRAC  shift, and go to state 199
+
+
+State 197
+
+   97 ELSE: T_ELSE $@17 T_O_CBRAC $@18 . CODE $@19 T_C_CBRAC
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 200
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 198
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 . COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+    T_MINUS       shift, and go to state 50
+    T_NULL        shift, and go to state 51
+    T_IDENTIFIER  shift, and go to state 52
+    T_STR         shift, and go to state 53
+    T_INTEGER     shift, and go to state 54
+    T_FLOAT       shift, and go to state 55
+    T_BOOL_T      shift, and go to state 56
+    T_BOOL_F      shift, and go to state 57
+
+    BOOLEAN  go to state 59
+    DIG      go to state 60
+    CONST    go to state 61
+    EE       go to state 62
+    EXPR2    go to state 63
+    EXPR1    go to state 64
+    EXPR     go to state 120
+    COND1    go to state 121
+    COND     go to state 201
+
+
+State 199
+
+   82 F_CL: T_O_CBRAC $@6 CODE $@7 T_C_CBRAC .
+
+    $default  reduce using rule 82 (F_CL)
+
+
+State 200
+
+   97 ELSE: T_ELSE $@17 T_O_CBRAC $@18 CODE . $@19 T_C_CBRAC
+
+    $default  reduce using rule 96 ($@19)
+
+    $@19  go to state 202
+
+
+State 201
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND . $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+    $default  reduce using rule 100 ($@22)
+
+    $@22  go to state 203
+
+
+State 202
+
+   97 ELSE: T_ELSE $@17 T_O_CBRAC $@18 CODE $@19 . T_C_CBRAC
+
+    T_C_CBRAC  shift, and go to state 204
+
+
+State 203
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 . T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+    T_C_NBRAC  shift, and go to state 205
+
+
+State 204
+
+   97 ELSE: T_ELSE $@17 T_O_CBRAC $@18 CODE $@19 T_C_CBRAC .
+
+    $default  reduce using rule 97 (ELSE)
+
+
+State 205
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC . T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+    T_O_CBRAC  shift, and go to state 206
+
+
+State 206
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC . $@23 CODE $@24 T_C_CBRAC $@25 I_OP
+
+    $default  reduce using rule 101 ($@23)
+
+    $@23  go to state 207
+
+
+State 207
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 . CODE $@24 T_C_CBRAC $@25 I_OP
+
+    T_WHITESPACE  reduce using rule 136 ($@45)
+    T_SEMI_COLON  reduce using rule 134 ($@44)
+    T_C_CBRAC     reduce using rule 141 (CODE)
+    T_FOR         reduce using rule 115 ($@32)
+    T_WHILE       reduce using rule 118 ($@34)
+    T_IF          reduce using rule 121 ($@36)
+    T_ECHO        reduce using rule 124 ($@38)
+    T_PRINT       reduce using rule 127 ($@40)
+    T_CR          reduce using rule 132 ($@43)
+    T_NEW_LINE    reduce using rule 130 ($@42)
+    $default      reduce using rule 138 ($@46)
+
+    CODE  go to state 208
+    $@32  go to state 8
+    $@34  go to state 9
+    $@36  go to state 10
+    $@38  go to state 11
+    $@40  go to state 12
+    $@42  go to state 13
+    $@43  go to state 14
+    $@44  go to state 15
+    $@45  go to state 16
+    $@46  go to state 17
+
+
+State 208
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE . $@24 T_C_CBRAC $@25 I_OP
+
+    $default  reduce using rule 102 ($@24)
+
+    $@24  go to state 209
+
+
+State 209
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 . T_C_CBRAC $@25 I_OP
+
+    T_C_CBRAC  shift, and go to state 210
+
+
+State 210
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC . $@25 I_OP
+
+    $default  reduce using rule 103 ($@25)
+
+    $@25  go to state 211
+
+
+State 211
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 . I_OP
+
+    T_ELSE    shift, and go to state 185
+    T_ELSEIF  shift, and go to state 186
+
+    $default  reduce using rule 107 (I_OP)
+
+    ELSE    go to state 187
+    ELSEIF  go to state 188
+    I_OP    go to state 212
+
+
+State 212
+
+  104 ELSEIF: T_ELSEIF $@20 T_O_NBRAC $@21 COND $@22 T_C_NBRAC T_O_CBRAC $@23 CODE $@24 T_C_CBRAC $@25 I_OP .
+
+    $default  reduce using rule 104 (ELSEIF)

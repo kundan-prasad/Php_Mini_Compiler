@@ -1,0 +1,11 @@
+<?php
+$t = 8;
+
+if ($t >= 20) {
+    echo "Have a good day!";
+}
+elseif($t < 30) {
+	echo "Have a good day Tomorrow!";
+}
+?>
+

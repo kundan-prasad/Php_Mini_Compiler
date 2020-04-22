@@ -1,0 +1,13 @@
+<?php
+$t = 8;
+$r = 5+3+8;
+$e=2*3;
+if ($t < 201 and $e == 5) {
+    echo "Have a good day!";
+}
+elseif ($t < 201 and $e == 5) {
+    //afd
+}
+echo "hi".$e*2;
+?>
+
